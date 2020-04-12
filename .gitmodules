@@ -1,0 +1,3 @@
+[submodule "cloud-api-core"]
+	path = cloud-api-core
+	url = https://gitlab.com/delphi-cloud-api/cloud-api-core.git
