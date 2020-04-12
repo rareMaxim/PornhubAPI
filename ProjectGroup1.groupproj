@@ -1,0 +1,60 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{423F1F30-835D-4DC8-85CB-9A2974456153}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="cloud-api-core\CloudAPI.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Package\Pornhub.dproj">
+            <Dependencies>cloud-api-core\CloudAPI.dproj</Dependencies>
+        </Projects>
+        <Projects Include="Stand\Project7.dproj">
+            <Dependencies>cloud-api-core\CloudAPI.dproj;Package\Pornhub.dproj</Dependencies>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="CloudAPI">
+        <MSBuild Projects="cloud-api-core\CloudAPI.dproj"/>
+    </Target>
+    <Target Name="CloudAPI:Clean">
+        <MSBuild Projects="cloud-api-core\CloudAPI.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="CloudAPI:Make">
+        <MSBuild Projects="cloud-api-core\CloudAPI.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Pornhub" DependsOnTargets="CloudAPI">
+        <MSBuild Projects="Package\Pornhub.dproj"/>
+    </Target>
+    <Target Name="Pornhub:Clean" DependsOnTargets="CloudAPI:Clean">
+        <MSBuild Projects="Package\Pornhub.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Pornhub:Make" DependsOnTargets="CloudAPI:Make">
+        <MSBuild Projects="Package\Pornhub.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Project7" DependsOnTargets="CloudAPI;Pornhub">
+        <MSBuild Projects="Stand\Project7.dproj"/>
+    </Target>
+    <Target Name="Project7:Clean" DependsOnTargets="CloudAPI:Clean;Pornhub:Clean">
+        <MSBuild Projects="Stand\Project7.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Project7:Make" DependsOnTargets="CloudAPI:Make;Pornhub:Make">
+        <MSBuild Projects="Stand\Project7.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="CloudAPI;Pornhub;Project7"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="CloudAPI:Clean;Pornhub:Clean;Project7:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="CloudAPI:Make;Pornhub:Make;Project7:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

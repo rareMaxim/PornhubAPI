@@ -28,6 +28,12 @@ package Pornhub;
 {$IMPLICITBUILD ON}
 
 requires
+  CloudApi,
   rtl;
+
+contains
+  PornhubApi.Client in '..\PornhubApi.Client.pas',
+  PornhubApi.Types.Request in '..\PornhubApi.Types.Request.pas',
+  PornhubApi.Types.Response in '..\PornhubApi.Types.Response.pas';
 
 end.
